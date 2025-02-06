@@ -20,6 +20,13 @@ if (isProd) {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
+    titleBarStyle: "hidden",
+    ...(process.platform !== 'darwin' ? { titleBarOverlay: true } : {}),
+    titleBarOverlay: {
+      color: "#ffffff",
+      symbolColor: "#000000",
+      height: 39
+    }
   })
 
   if (isProd) {
@@ -27,7 +34,6 @@ if (isProd) {
   } else {
     const port = process.argv[2]
     await mainWindow.loadURL(`http://localhost:${port}/`)
-    mainWindow.webContents.openDevTools()
   }
 })()
 

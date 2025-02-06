@@ -35,12 +35,26 @@
 }
 
 
-html {
+.select-cursor {
   cursor: url("../public/images/cursor.png"), auto;
 }
 
+.sticky-cursor {
+  cursor: url("../public/images/sticky-cursor.png"), auto;
+}
+
 .dots-bg {
-  background-color: transparent;
+  background-color: white;
   background-image: radial-gradient(#aaaaaa 10%, transparent 10%);
   background-size: 20px 20px;
+}
+
+html {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.titlebar {
+  app-region: drag;
+
 }

@@ -1,10 +1,13 @@
 import { Metadata } from "next";
 import { Inter } from "next/font/google"
-import "../styles/globals.css"
+import "@/styles/globals.css"
+import Providers from "@/lib/Providers";
+import Titlebar from "@/components/Titlebar";
 
 export const metadata: Metadata = {
     title: "Sticky",
-    description: "not the tyler song"
+    description: "not the tyler song",
+    manifest: "/manifest.json"
 }
 
 const font = Inter({
@@ -14,9 +17,12 @@ const font = Inter({
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang="en">
-            <body className={font.className + " antialiased dots-bg"}>
-                 {children}
-            </body>
+            <Providers>
+                <body className={font.className + " antialiased"}>
+                    <Titlebar/>
+                    {children}
+                </body>
+            </Providers>
         </html>
     )
 }

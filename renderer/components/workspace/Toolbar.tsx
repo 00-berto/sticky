@@ -4,12 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { iconVariants, Tool } from "@/lib/types/Tool";
 import clsx from "clsx";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import * as Mousetrap from "mousetrap";
+import { setTool } from "@/lib/slices/selectedToolSlice"
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 export default function Toolbar() {
-    const [tool, setTool] = useState<Tool>("select");
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
     const drawerRef = useRef<HTMLDivElement>(null);
+    const tool = useAppSelector(state => state.tool.value)
+    const dispatch = useAppDispatch();
 
     const toggleDrawerMenu = () => {
         setShowDrawer(!showDrawer);
@@ -25,25 +27,37 @@ export default function Toolbar() {
         }
     };
 
-    Mousetrap.bind("esc", () => setShowDrawer(false))
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+            setShowDrawer(false);
+        }
+    };
 
     useEffect(() => {
         if (showDrawer) {
             document.addEventListener("mousedown", handleClickOutside);
+            document.addEventListener("keydown", handleKeyDown);
         } else {
             document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("keydown", handleKeyDown);
         }
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("keydown", handleKeyDown);
         };
     }, [showDrawer]);
+
+    const onClick = (value: Tool) => {
+        dispatch(setTool(value))
+
+    }
 
     return (
         <div className={"flex flex-col gap-2 items-center justify-center w-full"}>
             {showDrawer && <Drawer ref={drawerRef}/>}
             <div className="bg-white flex flex-row gap-1.5 outline-1 w-min mx-auto outline-lightgray rounded-2xl p-2 drop-shadow-lg">
-                <ToolButton tool={"select"} activeTool={tool} onClick={() => setTool("select")}/>
-                <ToolButton tool={"sticky"} activeTool={tool} onClick={() => setTool("sticky")}/>
+                <ToolButton tool={"select"} activeTool={tool} onClick={() => onClick("select")}/>
+                <ToolButton tool={"sticky"} activeTool={tool} onClick={() => onClick("sticky")}/>
 
                 <div id={"drawerBtn"} onClick={toggleDrawerMenu} className={clsx("rounded-xl p-2.5 transition-colors ease duration-100", { "hover:bg-lightgray hover:text-white text-lightgray bg-white": !showDrawer }, { "bg-primary text-white": showDrawer })}>
                     {iconVariants["drawer"]}
@@ -53,7 +67,7 @@ export default function Toolbar() {
     )
 }
 
-function ToolButton({ tool, activeTool, onClick }: { tool: Tool, activeTool: Tool, onClick: any }) {
+function ToolButton({ tool, activeTool, onClick }: { tool: Tool, activeTool: string, onClick: any }) {
     return (
         <div onClick={onClick} className={clsx("rounded-xl p-2.5 transition-colors ease duration-100", { "hover:bg-lightgray hover:text-white text-lightgray bg-white": activeTool != tool }, { "bg-primary text-white": activeTool == tool })}>
             {iconVariants[tool]}
