@@ -198,7 +198,7 @@ function StickyNoteComponent({ note, isSelected, setSelectedNotes, updateNotePos
                 left: note.x,
                 outline: isSelected ? "3px solid #0094D8" : "none"
             }}
-            className={font.className + " text-darkgray select-none leading-6 text-2xl font-bold absolute min-w-36 max-w-36 min-h-36 bg-[#FEE155] p-5 rounded-lg drop-shadow-lg outline-0"}
+            className={font.className + " text-darkgray select-none leading-6 text-2xl font-bold absolute w-48 min-h-48 bg-[#FEE155] p-5 rounded-lg drop-shadow-lg outline-0"}
             onBlur={(e) => setText(e.currentTarget.innerText)}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}

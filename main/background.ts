@@ -1,5 +1,5 @@
 import path from 'path'
-import { app, ipcMain } from 'electron'
+import { app, ipcMain, ipcRenderer } from 'electron'
 import serve from 'electron-serve'
 import { createWindow } from './helpers'
 
@@ -23,10 +23,11 @@ if (isProd) {
     titleBarStyle: "hidden",
     ...(process.platform !== 'darwin' ? { titleBarOverlay: true } : {}),
     titleBarOverlay: {
-      color: "#ffffff",
+      color: "#ffffff00",
       symbolColor: "#000000",
-      height: 39
-    }
+      height: 40
+    },
+    icon: path.join(__dirname, "../renderer/public/images/logo.ico")
   })
 
   if (isProd) {

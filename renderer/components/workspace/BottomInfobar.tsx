@@ -1,14 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
-import MultiplayerIcon from "../svg/MultiplayerIcon";
+import { ComputerDesktopIcon, MoonIcon, QuestionMarkCircleIcon, SunIcon } from '@heroicons/react/24/outline'
+import MultiplayerIconFill from "../svg/MultiplayerIconFill";
 import { isElectron } from "@/lib/isElectron";
+import { useTheme } from "next-themes";
+import MultiplayerIcon from "@/components/svg/MultiplayerIcon";
 
 export default function BottomInfobar() {
     const [date, setDate] = useState<Date>(undefined);
     const [inputValue, setInputValue] = useState("untitled");
     const inputRef = useRef(null);
+    const { theme, setTheme } = useTheme();
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
@@ -22,7 +25,7 @@ export default function BottomInfobar() {
 
     return (
         <>
-            <div className="h-min flex justify-between bg-white p-1 px-3 border-t border-lightgray">
+            <div className="h-min flex justify-between bg-lightestgray dark:bg-darkgray p-1 px-3 border-t border-lightgray dark:border-black">
                 <div className="w-full my-auto flex flex-row justify-start gap-2 font-bold">
                     {date ? 
                         <div className="flex gap-3 text-lightgray">
@@ -42,7 +45,7 @@ export default function BottomInfobar() {
                         type="text"
                         value={inputValue}
                         onChange={handleInputChange}
-                        className="w-min ring-0 outline-0 m-auto text-center text-darkgray"
+                        className="w-min ring-0 outline-0 m-auto text-center text-darkestgray dark:text-white"
                         size={inputValue.length}
                         style={{ maxWidth: '80ch' }}
                         maxLength={80}
@@ -57,8 +60,11 @@ export default function BottomInfobar() {
                     {/* <span className="text-xs mt-auto mb-0.5 text-lightgray">.sticky</span> */}
                 </div>
 
-                <div className="w-full my-auto flex justify-end gap-2 font-bold text-lightgray">
-                    <MultiplayerIcon className="size-6"/>
+                <div className="w-full my-auto flex justify-end gap-2 font-bold text-lightgray items-center">
+                    {theme === "light" && <SunIcon className={"size-5 cursor-pointer"} onClick={() => setTheme("dark")}/>}
+                    {theme === "dark" && <MoonIcon className={"size-5 cursor-pointer"} onClick={() => setTheme("system")}/>}
+                    {theme === "system" && <ComputerDesktopIcon className={"size-5 cursor-pointer"} onClick={() => setTheme("light")}/>}
+                    <MultiplayerIcon className="size-6 stroke-2"/>
                     {!isElectron() && <span className="">Sticky</span>}
                     <QuestionMarkCircleIcon className="size-6 my-auto" />
                 </div>

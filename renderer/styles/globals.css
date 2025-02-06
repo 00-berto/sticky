@@ -1,9 +1,19 @@
 @import 'tailwindcss';
 
 @theme {
+  --color-darkestgray: #1e1e1e;
   --color-darkgray: #424242;
   --color-lightgray: #aaaaaa;
+  --color-lightestgray: #f0f0f0;
   --color-primary: #0094D8;
+
+  --dots-bg: #ffffff;
+  --dots-dots: #aaaaaa;
+}
+
+[data-theme="dark"] {
+  --dots-bg: #1e1e1e;
+  --dots-dots: #424242;
 }
 
 /*
@@ -24,6 +34,8 @@
   }
 }
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 @utility btn-blue {
   @apply text-white font-bold px-4 py-2 rounded-sm bg-blue-600 hover:bg-blue-500;
 }
@@ -34,7 +46,6 @@
   }
 }
 
-
 .select-cursor {
   cursor: url("../public/images/cursor.png"), auto;
 }
@@ -44,8 +55,8 @@
 }
 
 .dots-bg {
-  background-color: white;
-  background-image: radial-gradient(#aaaaaa 10%, transparent 10%);
+  background-color: var(--dots-bg);
+  background-image: radial-gradient(var(--dots-dots) 10%, transparent 10%);
   background-size: 20px 20px;
 }
 
@@ -58,3 +69,4 @@ html {
   app-region: drag;
 
 }
+
