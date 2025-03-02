@@ -1,38 +1,6 @@
-<p align="center"><img src="https://i.imgur.com/a9QWW0v.png"></p>
+# Sticky, a sticky note app by berto
+A simple ElectronJS and NextJS app built with Nextron, it allows you to create as many sticky notes as you want in a virtual canvas.
 
-## Usage
+It's very broken and I should remake it from scratch using React instead of Next, so that it can get properly recognized by Vercel and uploaded to the Internet.
 
-### Create an App
-
-```
-# with npx
-$ npx create-nextron-app my-app --example with-tailwindcss
-
-# with yarn
-$ yarn create nextron-app my-app --example with-tailwindcss
-
-# with pnpm
-$ pnpm dlx create-nextron-app my-app --example with-tailwindcss
-```
-
-### Install Dependencies
-
-```
-$ cd my-app
-
-# using yarn or npm
-$ yarn (or `npm install`)
-
-# using pnpm
-$ pnpm install --shamefully-hoist
-```
-
-### Use it
-
-```
-# development mode
-$ yarn dev (or `npm run dev` or `pnpm run dev`)
-
-# production build
-$ yarn build (or `npm run build` or `pnpm run build`)
-```
+I don't recommend using this in any way ❤️
